@@ -46,12 +46,17 @@ Looking forward to connecting, learning, collaborating and networking with the a
     window.open("https://www.linkedin.com/feed/", "_blank");
 
     alert(
-`What's Next?
+`✅ Attendee pass downloaded!
 
-🔻Download your personalized attendee pass.
-↪️Share it on LinkedIn, Instagram or X.
-🚨Tag Kramers Community, Miro, DevX 
-See you at Canvas 26 Hyderabad Watch Party! 🎉
+✅ Caption copied to clipboard!
+
+Next Steps:
+1. LinkedIn has been opened.
+2. Create a new post.
+3. Upload the downloaded attendee pass.
+4. Paste the copied caption (Ctrl + V).
+5. Add any @mentions if needed and post.`
+    );
   }, 700);
 };
 
@@ -176,10 +181,10 @@ Next Steps:
             lineHeight: "1.8",
           }}
         >
-          <li>Download your personalized attendee pass.</li>
-          <li>Share it on LinkedIn, Instagram or X.</li>
-          <li>Tag Miro, DevX and Kramers Community.</li>
-          <li>See you at Canvas 26 Hyderabad Watch Party! 🎉</li>
+          <li>🔻 Download your personalized attendee pass.</li>
+<li>↪️ Share it on LinkedIn, Instagram or X.</li>
+<li>🚨 Tag Kramers Community, Miro, DevX.</li>
+<li>See you at Canvas 26 Hyderabad Watch Party! 🎉</li>
         </ul>
       </div>
 
