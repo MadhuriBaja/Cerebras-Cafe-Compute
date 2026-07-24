@@ -82,7 +82,7 @@ ctx.restore();
           
           // 3. Draw Name
 const CENTER_X = PHOTO_X + PROFILE_SIZE / 2;
-const NAME_Y = PHOTO_Y + PROFILE_SIZE + 28;
+const NAME_Y = PHOTO_Y + PROFILE_SIZE + 20;
 const ROLE_Y = NAME_Y + 55; // Increased spacing
 
 ctx.textAlign = "center";
@@ -96,7 +96,7 @@ ctx.fillText(name, CENTER_X, NAME_Y);
 // Role
 if (role) {
   ctx.fillStyle = "#000000"; // Black
-  ctx.font = "bold 18px Arial";
+  ctx.font = "16px Arial";
   ctx.fillText(role, CENTER_X, ROLE_Y);
 }
           
