@@ -37,23 +37,21 @@ export const generateTicketCanvas = async (name, role, photoFile) => {
       const reader = new FileReader();
       reader.onload = (e) => {
         imgUser.onload = () => {
-          // 2. Draw User Photo
+          // 2. Draw User Photo (No Empty Space)
 
-const aspect = imgUser.width / imgUser.height;
+const ratio = imgUser.width / imgUser.height;
 
-let drawWidth;
-let drawHeight;
-let offsetX = 0;
-let offsetY = 0;
+let cropWidth = imgUser.width;
+let cropHeight = imgUser.height;
+let cropX = 0;
+let cropY = 0;
 
-if (aspect > 1) {
-  drawHeight = PROFILE_SIZE;
-  drawWidth = PROFILE_SIZE * aspect;
-  offsetX = -(drawWidth - PROFILE_SIZE) / 2;
+if (ratio > 1) {
+  cropWidth = imgUser.height;
+  cropX = (imgUser.width - cropWidth) / 2;
 } else {
-  drawWidth = PROFILE_SIZE;
-  drawHeight = PROFILE_SIZE / aspect;
-  offsetY = -(drawHeight - PROFILE_SIZE) / 2;
+  cropHeight = imgUser.width;
+  cropY = (imgUser.height - cropHeight) / 2;
 }
 
 ctx.save();
@@ -71,10 +69,14 @@ ctx.clip();
 
 ctx.drawImage(
   imgUser,
-  PHOTO_X + offsetX,
-  PHOTO_Y + offsetY,
-  drawWidth,
-  drawHeight
+  cropX,
+  cropY,
+  cropWidth,
+  cropHeight,
+  PHOTO_X,
+  PHOTO_Y,
+  PROFILE_SIZE,
+  PROFILE_SIZE
 );
 
 ctx.restore();
