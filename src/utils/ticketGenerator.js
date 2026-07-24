@@ -69,10 +69,6 @@ ctx.clip();
 
 ctx.drawImage(
   imgUser,
-  cropX,
-  cropY,
-  cropWidth,
-  cropHeight,
   PHOTO_X,
   PHOTO_Y,
   PROFILE_SIZE,
