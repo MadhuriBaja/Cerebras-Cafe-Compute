@@ -9,10 +9,10 @@ export const generateTicketCanvas = async (name, role, photoFile) => {
     const ctx = canvas.getContext('2d');
     
     // Config Constants (Matching Python Logic)
-    const TEMPLATE_URL = '/Template.png';
-    const PHOTO_X = 590; // Shifted left significantly (~3cm from previous)
-    const PHOTO_Y = 260;
-    const PROFILE_SIZE = 170;
+    const TEMPLATE_URL = "/template.png";
+    const PHOTO_X = 435;
+    const PHOTO_Y = 675;
+    const PROFILE_SIZE = 290;
     const NAME_X = 200;
     const NAME_START_Y = 340;
     const MAX_TEXT_WIDTH = 500;
@@ -33,29 +33,48 @@ export const generateTicketCanvas = async (name, role, photoFile) => {
       const reader = new FileReader();
       reader.onload = (e) => {
         imgUser.onload = () => {
-          // 2. Draw Circular User Photo
-          ctx.save();
-          ctx.beginPath();
-          ctx.arc(PHOTO_X + PROFILE_SIZE/2, PHOTO_Y + PROFILE_SIZE/2, PROFILE_SIZE/2, 0, Math.PI * 2);
-          ctx.closePath();
-          ctx.clip();
+          // 2. Draw User Photo
+
+const aspect = imgUser.width / imgUser.height;
+
+let drawWidth;
+let drawHeight;
+let offsetX = 0;
+let offsetY = 0;
+
+if (aspect > 1) {
+  drawHeight = PROFILE_SIZE;
+  drawWidth = PROFILE_SIZE * aspect;
+  offsetX = -(drawWidth - PROFILE_SIZE) / 2;
+} else {
+  drawWidth = PROFILE_SIZE;
+  drawHeight = PROFILE_SIZE / aspect;
+  offsetY = -(drawHeight - PROFILE_SIZE) / 2;
+}
+
+ctx.save();
+
+ctx.beginPath();
+ctx.roundRect(
+  PHOTO_X,
+  PHOTO_Y,
+  PROFILE_SIZE,
+  PROFILE_SIZE,
+  35
+);
+
+ctx.clip();
+
+ctx.drawImage(
+  imgUser,
+  PHOTO_X + offsetX,
+  PHOTO_Y + offsetY,
+  drawWidth,
+  drawHeight
+);
+
+ctx.restore();
           
-          // Center-crop logic
-          const aspect = imgUser.width / imgUser.height;
-          let drawWidth, drawHeight, offsetX = 0, offsetY = 0;
-          
-          if (aspect > 1) {
-            drawHeight = PROFILE_SIZE;
-            drawWidth = PROFILE_SIZE * aspect;
-            offsetX = -(drawWidth - PROFILE_SIZE) / 2;
-          } else {
-            drawWidth = PROFILE_SIZE;
-            drawHeight = PROFILE_SIZE / aspect;
-            offsetY = -(drawHeight - PROFILE_SIZE) / 2;
-          }
-          
-          ctx.drawImage(imgUser, PHOTO_X + offsetX, PHOTO_Y + offsetY, drawWidth, drawHeight);
-          ctx.restore();
           
           // 3. Draw Name (Auto-scale)
           let nameSize = 34;

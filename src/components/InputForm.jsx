@@ -36,7 +36,7 @@ const InputForm = ({ onSubmit }) => {
   return (
     <form onSubmit={handleSubmit}>
       <div className="form-group">
-        <label>Profile Photo</label>
+        <label>Upload Your Photo</label>
         <div 
           className="drop-zone"
           onDragOver={handleDragOver}
@@ -48,8 +48,12 @@ const InputForm = ({ onSubmit }) => {
           ) : (
             <div>
               <div style={{ fontSize: '2rem', marginBottom: '0.5rem', color: 'var(--accent-purple)' }}>📸</div>
-              <p>Drag & drop your photo here</p>
-              <p style={{ fontSize: '0.8rem', marginTop: '0.25rem', opacity: 0.7 }}>or click to browse</p>
+              ✨
+Drag & drop your photo here
+
+<p style={{ fontSize: "0.8rem", marginTop: "0.25rem", opacity: 0.7 }}>
+Click or drag an image to create your personalized Miro attendee pass.
+</p>
             </div>
           )}
           <input 
@@ -69,20 +73,20 @@ const InputForm = ({ onSubmit }) => {
           value={name} 
           className="form-input"
           onChange={(e) => setName(e.target.value)} 
-          placeholder="Enter your name"
+          placeholder="Enter your full name"
           maxLength={40}
           required 
         />
       </div>
 
       <div className="form-group">
-        <label>Role / Company (Optional)</label>
+        <label>Company / Designation (Optional)</label>
         <input 
           type="text" 
           value={role} 
           className="form-input"
           onChange={(e) => setRole(e.target.value)} 
-          placeholder="e.g. Software Engineer at Google"
+          placeholder="e.g. Product Designer at Miro"
           maxLength={40}
         />
       </div>
@@ -92,7 +96,7 @@ const InputForm = ({ onSubmit }) => {
         className="btn-primary" 
         disabled={!name || !photo}
       >
-        Generate My Ticket
+       Generate My Attendee Pass
       </button>
     </form>
   );

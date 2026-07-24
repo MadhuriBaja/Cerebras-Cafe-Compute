@@ -1,10 +1,13 @@
 :root {
-  --accent-pink: #ff4da6;
-  --accent-purple: #8b5cf6;
-  --text-primary: #ffffff;
-  --text-secondary: rgba(255, 255, 255, 0.7);
-  --glass-bg: rgba(255, 255, 255, 0.03);
-  --glass-border: rgba(255, 255, 255, 0.08);
+  --accent-blue: #2563eb;
+  --accent-yellow: #ffd02f;
+  --accent-purple: #6c4cf1;
+
+  --text-primary: #1f2937;
+  --text-secondary: #6b7280;
+
+  --glass-bg: rgba(255,255,255,0.85);
+  --glass-border: rgba(0,0,0,0.08);
 }
 
 html, body {
@@ -15,48 +18,57 @@ html, body {
 }
 
 body {
-  font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
-  color: #ffffff;
-  background: url('/bg.png') no-repeat center center fixed;
-  background-size: cover;
+  margin: 0;
+  font-family: 'Inter', 'Poppins', sans-serif;
+  color: #fff;
+  background: url('/bg.png') center center / cover no-repeat fixed;
+  background-color: #050505;
   min-height: 100vh;
+  overflow-x: hidden;
   position: relative;
 }
 
-/* Dark Overlay with Blur */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
-  background-color: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background: rgba(0,0,0,0.82);
+  backdrop-filter: blur(6px);
   z-index: -1;
 }
 
-#root {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  padding: 2rem 1rem;
-  box-sizing: border-box;
+/* Dark Overlay with Blur */
+
+
+#root{
+    min-height:100vh;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    flex-direction:column;
+
+    padding:40px 20px;
 }
 
 /* Glassmorphism Card (Refined) */
-.glass-card {
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 20px;
-  padding: 2.5rem;
-  width: 100%;
-  max-width: 500px;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-  box-sizing: border-box;
-  position: relative;
+.glass-card{
+    width:100%;
+    max-width:650px;
+    padding:50px;
+    border-radius:28px;
+
+    background:rgba(20,20,20,.65);
+    backdrop-filter:blur(20px);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    box-shadow:
+        0 20px 50px rgba(0,0,0,.5),
+        inset 0 0 1px rgba(255,255,255,.2);
 }
 
 /* Glow Effect */
@@ -89,15 +101,13 @@ body::before {
   flex-direction: column;
 }
 
-.form-group label {
-  font-size: 0.9rem;
-  font-weight: 500;
-  margin-bottom: 0.5rem;
-  color: var(--text-secondary);
+.form-input{
+    padding: 18px 20px;
+font-size: 18px;
 }
 
 .form-input {
-  background: rgba(0, 0, 0, 0.2);
+  background:white;
   border: 1px solid var(--glass-border);
   border-radius: 8px;
   padding: 0.75rem 1rem;
@@ -112,14 +122,18 @@ body::before {
   box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.2);
 }
 
-.drop-zone {
-  border: 2px dashed var(--glass-border);
-  border-radius: 12px;
-  padding: 2rem;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  background: rgba(0,0,0,0.1);
+.drop-zone{
+    min-height:260px;
+    border:2px dashed rgba(255,255,255,.18);
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+
+    border-radius:16px;
+
+    transition:.3s;
 }
 
 .drop-zone:hover {
@@ -173,22 +187,21 @@ body::before {
 }
 
 /* Primary Button (Gradient Pink/Purple) */
-.btn-primary {
-  width: 100%;
-  background: linear-gradient(135deg, #ff4da6 0%, #8b5cf6 100%);
-  color: white;
-  border: none;
-  border-radius: 12px;
-  padding: 1.1rem;
-  font-size: 1rem;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  margin-top: 1rem;
-  text-transform: uppercase;
-}
+.btn-primary{
 
+    padding:18px;
+
+    padding:20px;
+font-size:20px;
+
+    border-radius:14px;
+
+    background:linear-gradient(
+        90deg,
+        #ff4da6,
+        #8b5cf6
+    );
+}
 .btn-primary:hover:not(:disabled) {
   transform: scale(1.05);
   box-shadow: 0 10px 30px rgba(255, 77, 166, 0.4);
@@ -239,4 +252,42 @@ body::before {
   width: 100%;
   height: auto;
   display: block;
+}
+
+.app-container{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    min-height:100vh;
+    padding:40px 20px;
+}
+
+.hero-section{
+    text-align:center;
+    margin-bottom:35px;
+}
+
+.hero-section h1{
+    margin:0;
+    font-size:64px;
+    font-weight:900;
+    letter-spacing:2px;
+    color:white;
+}
+
+.hero-section h2{
+    margin-top:12px;
+    margin-bottom:18px;
+    color:#ff4da6;
+    font-size:30px;
+    font-weight:700;
+}
+
+.hero-section p{
+    max-width:650px;
+    margin:auto;
+    color:#cbd5e1;
+    line-height:1.8;
+    font-size:18px;
 }
