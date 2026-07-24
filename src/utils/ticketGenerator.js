@@ -12,6 +12,7 @@ export const generateTicketCanvas = async (name, role, photoFile) => {
     
     // Config Constants (Matching Python Logic)
     const TEMPLATE_URL = "/template.png";
+const OVERLAY_URL = "/overlay.png";
     const PHOTO_X = 435;
     const PHOTO_Y = 675;
     const PROFILE_SIZE = 290;
@@ -31,8 +32,8 @@ export const generateTicketCanvas = async (name, role, photoFile) => {
       canvas.width = imgTemplate.width;
       canvas.height = imgTemplate.height;
       
-      // 1. Draw Template
-      ctx.drawImage(imgTemplate, 0, 0);
+      // 1. Draw Background Template
+ctx.drawImage(imgTemplate, 0, 0);
       
       const reader = new FileReader();
       reader.onload = (e) => {
@@ -97,8 +98,17 @@ if (role) {
   ctx.font = "bold 18px Arial";
   ctx.fillText(role, CENTER_X, ROLE_Y);
 }
-          
-          resolve(canvas.toDataURL('image/png', 1.0));
+         // 4. Draw Logo + Border Overlay on top
+const imgOverlay = new Image();
+
+imgOverlay.onload = () => {
+  ctx.drawImage(imgOverlay, 0, 0);
+
+  resolve(canvas.toDataURL('image/png', 1.0));
+};
+
+imgOverlay.src = "/overlay.png"; 
+
         };
         imgUser.src = e.target.result;
       };
