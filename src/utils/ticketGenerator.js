@@ -12,7 +12,6 @@ export const generateTicketCanvas = async (name, role, photoFile) => {
     
     // Config Constants (Matching Python Logic)
     const TEMPLATE_URL = "/template.png";
-const OVERLAY_URL = "/overlay.png";
     const PHOTO_X = 435;
     const PHOTO_Y = 675;
     const PROFILE_SIZE = 290;
@@ -32,27 +31,29 @@ const OVERLAY_URL = "/overlay.png";
       canvas.width = imgTemplate.width;
       canvas.height = imgTemplate.height;
       
-      // 1. Draw Background Template
-ctx.drawImage(imgTemplate, 0, 0);
+      // 1. Draw Template
+      ctx.drawImage(imgTemplate, 0, 0);
       
       const reader = new FileReader();
       reader.onload = (e) => {
         imgUser.onload = () => {
-          // 2. Draw User Photo (No Empty Space)
+          // 2. Draw User Photo
 
-const ratio = imgUser.width / imgUser.height;
+const aspect = imgUser.width / imgUser.height;
 
-let cropWidth = imgUser.width;
-let cropHeight = imgUser.height;
-let cropX = 0;
-let cropY = 0;
+let drawWidth;
+let drawHeight;
+let offsetX = 0;
+let offsetY = 0;
 
-if (ratio > 1) {
-  cropWidth = imgUser.height;
-  cropX = (imgUser.width - cropWidth) / 2;
+if (aspect > 1) {
+  drawHeight = PROFILE_SIZE;
+  drawWidth = PROFILE_SIZE * aspect;
+  offsetX = -(drawWidth - PROFILE_SIZE) / 2;
 } else {
-  cropHeight = imgUser.width;
-  cropY = (imgUser.height - cropHeight) / 2;
+  drawWidth = PROFILE_SIZE;
+  drawHeight = PROFILE_SIZE / aspect;
+  offsetY = -(drawHeight - PROFILE_SIZE) / 2;
 }
 
 ctx.save();
@@ -70,10 +71,10 @@ ctx.clip();
 
 ctx.drawImage(
   imgUser,
-  PHOTO_X,
-  PHOTO_Y,
-  PROFILE_SIZE,
-  PROFILE_SIZE
+  PHOTO_X + offsetX,
+  PHOTO_Y + offsetY,
+  drawWidth,
+  drawHeight
 );
 
 ctx.restore();
@@ -98,17 +99,8 @@ if (role) {
   ctx.font = "bold 18px Arial";
   ctx.fillText(role, CENTER_X, ROLE_Y);
 }
-         // 4. Draw Logo + Border Overlay on top
-const imgOverlay = new Image();
-
-imgOverlay.onload = () => {
-  ctx.drawImage(imgOverlay, 0, 0);
-
-  resolve(canvas.toDataURL('image/png', 1.0));
-};
-
-imgOverlay.src = "/overlay.png"; 
-
+          
+          resolve(canvas.toDataURL('image/png', 1.0));
         };
         imgUser.src = e.target.result;
       };
