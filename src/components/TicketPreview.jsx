@@ -46,17 +46,12 @@ Looking forward to connecting, learning, collaborating and networking with the a
     window.open("https://www.linkedin.com/feed/", "_blank");
 
     alert(
-`✅ Attendee pass downloaded!
+`What's Next?
 
-✅ Caption copied to clipboard!
-
-Next Steps:
-1. LinkedIn has been opened.
-2. Create a new post.
-3. Upload the downloaded attendee pass.
-4. Paste the copied caption (Ctrl + V).
-5. Add any @mentions if needed and post.`
-    );
+🔻Download your personalized attendee pass.
+↪️Share it on LinkedIn, Instagram or X.
+🚨Tag Kramers Community, Miro, DevX 
+See you at Canvas 26 Hyderabad Watch Party! 🎉
   }, 700);
 };
 
