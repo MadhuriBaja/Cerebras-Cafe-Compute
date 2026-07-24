@@ -1,40 +1,93 @@
 import React from "react";
 
 const TicketPreview = ({ ticketUrl, onReset }) => {
-  const shareText =
-    "I'm attending Miro Canvas 26 - Hyderabad Watch Party! 🚀 Excited to connect, learn, collaborate, and network with the Miro community. #Miro #Canvas26 #Hyderabad #DevX #KramersCommunity";
+  const shareText = `🚀 Excited to attend Miro Canvas '26 - Hyderabad Watch Party!
 
-  const handleDownload = () => {
+Looking forward to connecting, learning, collaborating and networking with the amazing Miro community.
+
+#PosterDesign
+#VolunteerLead
+#VenuePartner
+#Speaker
+#ProductName
+#KramersCommunity
+#Miro
+#Canvas26
+#Hyderabad
+#DevX`;
+
+  const handleDownload = async () => {
+  try {
+    const response = await fetch(ticketUrl);
+    const blob = await response.blob();
+
+    const url = window.URL.createObjectURL(blob);
+
     const link = document.createElement("a");
+    link.href = url;
     link.download = "Miro_Canvas26_Attendee_Pass.png";
-    link.href = ticketUrl;
+
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-  };
 
-  const handleLinkedInShare = () => {
-  // Download the attendee pass first
+    window.URL.revokeObjectURL(url);
+  } catch (err) {
+    console.error(err);
+    alert("Unable to download the attendee pass.");
+  }
+};
+
+  const handleLinkedInShare = async () => {
+  // Download attendee pass
   handleDownload();
 
-  // Open LinkedIn after a short delay
+  // Copy caption
+  await navigator.clipboard.writeText(shareText);
+
+  // Open LinkedIn
   setTimeout(() => {
     window.open("https://www.linkedin.com/feed/", "_blank");
 
     alert(
-      "Your attendee pass has been downloaded.\n\nCreate a new LinkedIn post, upload the downloaded image, and tag Miro, DevX, and Kramers Community."
+`✅ Attendee pass downloaded!
+
+✅ Caption copied to clipboard!
+
+Next Steps:
+1. LinkedIn has been opened.
+2. Create a new post.
+3. Upload the downloaded attendee pass.
+4. Paste the copied caption (Ctrl + V).
+5. Add any @mentions if needed and post.`
     );
-  }, 600);
+  }, 700);
 };
 
-  const handleInstagramShare = () => {
-    handleDownload();
-    setTimeout(() => {
-      alert(
-        "Attendee pass downloaded! 📸 Share it on Instagram and tag Miro Hyderabad Watch Party."
-      );
-    }, 500);
-  };
+  const handleInstagramShare = async () => {
+  // Download attendee pass
+  handleDownload();
+
+  // Copy caption
+  await navigator.clipboard.writeText(shareText);
+
+  // Open Instagram
+  setTimeout(() => {
+    window.open("https://www.instagram.com/", "_blank");
+
+    alert(
+`✅ Attendee pass downloaded!
+
+✅ Caption copied to clipboard!
+
+Next Steps:
+1. Instagram has been opened.
+2. Upload the downloaded attendee pass.
+3. Paste the copied caption.
+4. Share your post.`
+    );
+  }, 700);
+};
 
   const handleTwitterShare = () => {
     const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(

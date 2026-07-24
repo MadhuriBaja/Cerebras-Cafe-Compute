@@ -4,6 +4,8 @@
  */
 
 export const generateTicketCanvas = async (name, role, photoFile) => {
+  console.log("Name:", name);
+  console.log("Role:", role);
   return new Promise((resolve, reject) => {
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
@@ -24,6 +26,8 @@ export const generateTicketCanvas = async (name, role, photoFile) => {
     imgUser.crossOrigin = "anonymous";
     
     imgTemplate.onload = () => {
+      console.log("Canvas Width:", canvas.width);
+      console.log("Canvas Height:", canvas.height);
       canvas.width = imgTemplate.width;
       canvas.height = imgTemplate.height;
       
@@ -76,66 +80,25 @@ ctx.drawImage(
 ctx.restore();
           
           
-          // 3. Draw Name (Auto-scale)
-          let nameSize = 34;
-          ctx.fillStyle = "#FFD700"; // Yellow/Gold
-          ctx.textAlign = "center";
-          ctx.textBaseline = "top";
-          
-          const getFont = (size) => `bold ${size}px Inter, Poppins, Arial`;
-          const CENTER_X = PHOTO_X + PROFILE_SIZE / 2;
-          const NAME_MAX_WIDTH = 260; // Reduced to fit within borders safely
-          
-          ctx.font = getFont(nameSize);
-          while (ctx.measureText(name).width > NAME_MAX_WIDTH && nameSize > 18) {
-            nameSize -= 2;
-            ctx.font = getFont(nameSize);
-          }
-          
-          // Handle Text Wrap (Simple)
-          let words = name.split(' ');
-          let lines = [];
-          let currentLine = words[0] || '';
-          
-          for (let i = 1; i < words.length; i++) {
-            if (ctx.measureText(currentLine + " " + words[i]).width < NAME_MAX_WIDTH) {
-              currentLine += " " + words[i];
-            } else {
-              lines.push(currentLine);
-              currentLine = words[i];
-            }
-          }
-          if (currentLine) lines.push(currentLine);
-          lines = lines.slice(0, 2); // Max 2 lines
-          
-          let currentY = PHOTO_Y + PROFILE_SIZE + 20;
-          lines.forEach(line => {
-            ctx.fillText(line, CENTER_X, currentY); // Removed .toUpperCase()
-            currentY += nameSize + 8;
-          });
-          
-          // 4. Draw Designation (Role)
-          if (role) {
-            let roleSize = Math.max(14, Math.floor(nameSize * 0.45));
-            ctx.font = `${roleSize}px Inter, Poppins, Arial`;
-            
-            // Constrain role text width as well
-            while (ctx.measureText(role).width > NAME_MAX_WIDTH && roleSize > 10) {
-              roleSize -= 1;
-              ctx.font = `${roleSize}px Inter, Poppins, Arial`;
-            }
+          // 3. Draw Name
+const CENTER_X = PHOTO_X + PROFILE_SIZE / 2;
+const NAME_Y = PHOTO_Y + PROFILE_SIZE + 28;
+const ROLE_Y = NAME_Y + 55; // Increased spacing
 
-            ctx.fillStyle = "#FFFFFF";
-            
-            currentY += 4;
-            // Prevent bottom overlap
-            const BOTTOM_LIMIT = 540;
-            if (currentY + roleSize > BOTTOM_LIMIT) {
-              currentY = BOTTOM_LIMIT - roleSize - 10;
-            }
-            
-            ctx.fillText(role, CENTER_X, currentY);
-          }
+ctx.textAlign = "center";
+ctx.textBaseline = "top";
+
+// Name
+ctx.fillStyle = "#000000"; // Black
+ctx.font = "bold 28px Arial";
+ctx.fillText(name, CENTER_X, NAME_Y);
+
+// Role
+if (role) {
+  ctx.fillStyle = "#000000"; // Black
+  ctx.font = "bold 18px Arial";
+  ctx.fillText(role, CENTER_X, ROLE_Y);
+}
           
           resolve(canvas.toDataURL('image/png', 1.0));
         };
