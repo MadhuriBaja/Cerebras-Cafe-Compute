@@ -96,7 +96,7 @@ ctx.fillText(name, CENTER_X, NAME_Y);
 // Role
 if (role) {
   ctx.fillStyle = "#000000"; // Black
-  ctx.font = "bold 18px Arial";
+  ctx.font = "bold 24px Arial";
   ctx.fillText(role, CENTER_X, ROLE_Y);
 }
           
