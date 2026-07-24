@@ -1,19 +1,15 @@
 import React from "react";
 
 const TicketPreview = ({ ticketUrl, onReset }) => {
-  const shareText = `🚀 Excited to attend Miro Canvas '26 - Hyderabad Watch Party!
+  const shareText = `🚀 Excited to attend @Miro Canvas '26 - Hyderabad Watch Party!
 
 Looking forward to connecting, learning, collaborating and networking with the amazing Miro community.
 
-#PosterDesign
-#VolunteerLead
-#VenuePartner
-#Speaker
-#ProductName
 #KramersCommunity
+#Hyderabad
+#Trending
 #Miro
 #Canvas26
-#Hyderabad
 #DevX`;
 
   const handleDownload = async () => {
