@@ -1,37 +1,64 @@
-# AI Conclave: Women's Edition - Ticket Generator
+# 🎨 Miro Canvas 26
 
-A premium, frontend-only React application to generate personalized event tickets with AI-themed aesthetics.
+A web-based project developed for the Miro Canvas 26 event to simplify attendee registration and ticket generation. The application provides a clean, responsive interface for users to register and receive personalized event tickets.
 
-## 🚀 Features
-- **Pure Frontend Generation**: Uses HTML5 Canvas for 100% mobile compatibility.
-- **Luma-Inspired UI**: Dark theme with glassmorphism and smooth animations.
-- **Social Sharing**: One-click sharing for LinkedIn, X (Twitter), and Instagram.
-- **Zero Backend**: Fully self-contained React app.
+## ✨ Features
 
-## 🛠️ Local Setup
+- 🎟️ Event ticket generation
+- 📝 User registration form
+- 📱 Responsive design
+- ⚡ Fast and simple user experience
+- 🎨 Clean and modern UI
 
-### 1. Installation
-```bash
-npm install
+## 🛠️ Tech Stack
+
+- HTML5
+- CSS3
+- JavaScript
+- GitHub Pages (Deployment)
+
+## 🚀 Live Demo
+
+https://madhurib4555-glitch.github.io/Miro-Canvas-26/
+
+> Replace the above link if your deployed URL is different.
+
+## 📂 Project Structure
+
+```
+Miro-Canvas-26/
+│── assets/
+│── css/
+│── js/
+│── images/
+│── index.html
+│── README.md
 ```
 
-### 2. Run Development Server
-```bash
-npm run dev
+## 📸 Screenshots
+
+Add screenshots of your application here.
+
+Example:
+
+```
+screenshots/
+├── home-page.png
+├── registration-form.png
+├── generated-ticket.png
 ```
 
----
+## 🎯 Purpose
 
-## 🌐 Deployment (Vercel)
+This project was created as part of the **Miro Canvas 26** initiative to provide a simple, user-friendly digital ticket generation experience for event attendees.
 
-1. Connect your GitHub repository to **Vercel**.
-2. Vercel will automatically detect the Vite project in the root.
+## 👩‍💻 Author
 
----
+**Madhuri Baja**
 
-## 📁 Project Structure
-- `src/utils/ticketGenerator.js`: Core Canvas drawing logic.
-- `public/`: Static assets (Template, Background, Logos).
+- GitHub: https://github.com/madhurib4555-glitch
+- LinkedIn: https://www.linkedin.com/in/madhuri-baja-140294371/
 
-## ⚖️ Credits
-Built by **React Hyderabad** & **Juicer Technology**.
+## ⭐ Support
+
+If you found this project helpful, consider giving it a ⭐ on GitHub.
