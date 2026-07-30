@@ -19,9 +19,7 @@ A web-based project developed for the Miro Canvas 26 event to simplify attendee 
 
 ## 🚀 Live Demo
 
-https://madhurib4555-glitch.github.io/Miro-Canvas-26/
-
-> Replace the above link if your deployed URL is different.
+https://miro-canvas-26.vercel.app/
 
 ## 📂 Project Structure
 
@@ -33,19 +31,6 @@ Miro-Canvas-26/
 │── images/
 │── index.html
 │── README.md
-```
-
-## 📸 Screenshots
-
-Add screenshots of your application here.
-
-Example:
-
-```
-screenshots/
-├── home-page.png
-├── registration-form.png
-├── generated-ticket.png
 ```
 
 ## 🎯 Purpose
