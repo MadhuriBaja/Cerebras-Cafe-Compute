@@ -52,7 +52,7 @@ const InputForm = ({ onSubmit }) => {
 Drag & drop your photo here
 
 <p style={{ fontSize: "0.8rem", marginTop: "0.25rem", opacity: 0.7 }}>
-Click or drag an image to create your personalized Miro attendee pass.
+Click or drag an image to create your personalized Cerebras attendee pass.
 </p>
             </div>
           )}
@@ -86,7 +86,7 @@ Click or drag an image to create your personalized Miro attendee pass.
           value={role} 
           className="form-input"
           onChange={(e) => setRole(e.target.value)} 
-          placeholder="e.g. Product Designer at Miro"
+          placeholder="e.g. Product Designer at Cerebras"
           maxLength={40}
         />
       </div>
