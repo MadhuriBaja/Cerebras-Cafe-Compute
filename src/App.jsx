@@ -16,11 +16,20 @@ function App() {
 
     try {
       const { name, role, photo } = data;
-      const url = await generateTicketCanvas(name, role, photo);
+
+      const url = await generateTicketCanvas(
+        name,
+        role,
+        photo
+      );
+
       setTicketUrl(url);
     } catch (error) {
       console.error(error);
-      alert("Error generating attendee pass.");
+
+      alert(
+        "Error generating your Cerebras attendee poster."
+      );
     } finally {
       setLoading(false);
     }
@@ -32,26 +41,60 @@ function App() {
 
   return (
     <div className="app-container">
+
+      {/* =========================================
+          HEADER
+          ========================================= */}
+
       <div className="hero-section">
-        <h1>MIRO CANVAS 26</h1>
-        <h2>Hyderabad Watch Party</h2>
+
+        <h1>
+          <span className="cafe-word">
+            CAFE
+          </span>{" "}
+
+          <span className="compute-word">
+            COMPUTE
+          </span>
+        </h1>
+
+        <h2>
+          Cerebras
+        </h2>
+
         <p>
-          Upload your photo and generate your personalized attendee pass.
+          Upload your photo and generate your
+          personalized "I'm Attending" poster.
         </p>
+
       </div>
 
+      {/* =========================================
+          MAIN CONTENT
+          ========================================= */}
+
       <main className="glass-card">
+
         {loading ? (
           <Loader />
+
         ) : ticketUrl ? (
+
           <TicketPreview
             ticketUrl={ticketUrl}
             onReset={handleReset}
           />
+
         ) : (
-          <InputForm onSubmit={handleGenerateTicket} />
+
+          <InputForm
+            onSubmit={handleGenerateTicket}
+          />
+
         )}
+
       </main>
+
     </div>
   );
 }
