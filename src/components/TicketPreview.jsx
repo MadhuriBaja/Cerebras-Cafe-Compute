@@ -10,7 +10,7 @@ Looking forward to connecting, learning, collaborating and networking with the a
 #Trending
 #Cerebras
 #CafeCompute
-#DevX;
+#DevX`;
 
   const handleDownload = async () => {
     try {
@@ -46,7 +46,7 @@ Looking forward to connecting, learning, collaborating and networking with the a
       window.open("https://www.linkedin.com/feed/", "_blank");
 
       alert(
-`✅ Cerebras attendee poster downloaded!
+        `✅ Cerebras attendee poster downloaded!
 
 ✅ Caption copied to clipboard!
 
@@ -72,7 +72,7 @@ Next Steps:
       window.open("https://www.instagram.com/", "_blank");
 
       alert(
-`✅ Cerebras attendee poster downloaded!
+        `✅ Cerebras attendee poster downloaded!
 
 ✅ Caption copied to clipboard!
 
