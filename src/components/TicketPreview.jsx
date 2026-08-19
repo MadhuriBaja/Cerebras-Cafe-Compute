@@ -3,15 +3,14 @@ import React from "react";
 const TicketPreview = ({ ticketUrl, onReset }) => {
   const shareText = `🚀 Excited to attend Cerebras Cafe Compute!
 
-Looking forward to connecting, learning, collaborating and networking with the amazing Cerebras community.
+Looking forward to connecting, learning, collaborating and networking with the amazing @Cerebras community.
 
 #KramersCommunity
 #Hyderabad
 #Trending
 #Cerebras
 #CafeCompute
-#DevX
-#Diyi Zhu`;
+#DevX;
 
   const handleDownload = async () => {
     try {
