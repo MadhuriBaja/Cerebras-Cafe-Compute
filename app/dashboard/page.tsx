@@ -28,9 +28,50 @@ type Participant = {
 };
 
 export default function DashboardPage() {
+  const [authenticated, setAuthenticated] = useState(false);
+  const [password, setPassword] = useState("");
+  const [loginError, setLoginError] = useState("");
+  const [loggingIn, setLoggingIn] = useState(false);
+
   const [participants, setParticipants] = useState<Participant[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+
+  // --------------------------------------------------
+  // LOGIN
+  // --------------------------------------------------
+
+  const handleLogin = async (event: React.FormEvent) => {
+    event.preventDefault();
+
+    setLoggingIn(true);
+    setLoginError("");
+
+    try {
+      const response = await fetch("/api/dashboard-login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ password }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok || !data.success) {
+        setLoginError("Incorrect password.");
+        setLoggingIn(false);
+        return;
+      }
+
+      setAuthenticated(true);
+      setPassword("");
+    } catch {
+      setLoginError("Unable to connect. Please try again.");
+    }
+
+    setLoggingIn(false);
+  };
 
   // --------------------------------------------------
   // LOAD PARTICIPANTS
@@ -61,11 +102,12 @@ export default function DashboardPage() {
   // --------------------------------------------------
 
   useEffect(() => {
+    if (!authenticated) return;
+
     loadParticipants();
 
     const channel = supabase
       .channel("read-the-room-participants")
-
       .on(
         "postgres_changes",
         {
@@ -92,7 +134,6 @@ export default function DashboardPage() {
           });
         }
       )
-
       .subscribe((status) => {
         console.log("Realtime:", status);
       });
@@ -100,7 +141,7 @@ export default function DashboardPage() {
     return () => {
       supabase.removeChannel(channel);
     };
-  }, []);
+  }, [authenticated]);
 
   // --------------------------------------------------
   // ROOM STATISTICS
@@ -177,7 +218,114 @@ export default function DashboardPage() {
   }, [participants]);
 
   // --------------------------------------------------
-  // UI
+  // LOGIN SCREEN
+  // --------------------------------------------------
+
+  if (!authenticated) {
+    return (
+      <main className="flex min-h-screen items-center justify-center bg-[#fafafa] px-5 text-zinc-900">
+
+        <div className="w-full max-w-md">
+
+          <div className="overflow-hidden rounded-[24px] border border-zinc-200 bg-white shadow-[0_12px_45px_rgba(0,0,0,0.06)]">
+
+            <div className="h-1.5 w-full bg-orange-500" />
+
+            <div className="px-8 py-10 sm:px-10">
+
+              <div className="flex items-center gap-3">
+
+                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-orange-500 text-xl text-white">
+                  ⚡
+                </div>
+
+                <div>
+                  <p className="text-[11px] font-semibold tracking-[0.38em] text-zinc-900">
+                    CEREBRAS
+                  </p>
+
+                  <p className="mt-0.5 text-[8px] uppercase tracking-[0.28em] text-zinc-400">
+                    Host Control
+                  </p>
+                </div>
+
+              </div>
+
+              <div className="mt-9">
+
+                <p className="text-[9px] font-medium uppercase tracking-[0.3em] text-orange-500">
+                  Private Area
+                </p>
+
+                <h1 className="mt-3 text-4xl font-semibold tracking-[-0.035em] text-zinc-950">
+                  Read the Room
+                </h1>
+
+                <p className="mt-3 text-sm leading-6 text-zinc-500">
+                  Enter the host password to access the live room dashboard.
+                </p>
+
+              </div>
+
+              <form
+                onSubmit={handleLogin}
+                className="mt-8"
+              >
+
+                <label
+                  htmlFor="dashboard-password"
+                  className="text-[9px] font-medium uppercase tracking-[0.2em] text-zinc-500"
+                >
+                  Host password
+                </label>
+
+                <input
+                  id="dashboard-password"
+                  type="password"
+                  value={password}
+                  onChange={(event) =>
+                    setPassword(event.target.value)
+                  }
+                  placeholder="Enter password"
+                  autoComplete="current-password"
+                  className="mt-2 w-full rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-3.5 text-sm text-zinc-900 outline-none transition focus:border-orange-400 focus:bg-white focus:ring-2 focus:ring-orange-100"
+                  required
+                />
+
+                {loginError && (
+                  <p className="mt-3 rounded-lg bg-red-50 px-3 py-2.5 text-xs text-red-600">
+                    {loginError}
+                  </p>
+                )}
+
+                <button
+                  type="submit"
+                  disabled={loggingIn}
+                  className="mt-5 w-full rounded-xl bg-orange-500 px-5 py-3.5 text-sm font-semibold text-white transition hover:bg-orange-600 disabled:cursor-not-allowed disabled:opacity-60"
+                >
+                  {loggingIn
+                    ? "Checking..."
+                    : "Enter Dashboard"}
+                </button>
+
+              </form>
+
+              <p className="mt-6 text-center text-[8px] uppercase tracking-[0.2em] text-zinc-300">
+                Host access only
+              </p>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </main>
+    );
+  }
+
+  // --------------------------------------------------
+  // DASHBOARD
   // --------------------------------------------------
 
   return (
@@ -193,13 +341,9 @@ export default function DashboardPage() {
 
       <div className="relative mx-auto max-w-[1700px] px-5 py-6 sm:px-8 lg:px-10 lg:py-8">
 
-        {/* ================================================= */}
         {/* HEADER */}
-        {/* ================================================= */}
 
         <header className="overflow-hidden rounded-[24px] border border-zinc-200 bg-white shadow-[0_12px_45px_rgba(0,0,0,0.045)]">
-
-          {/* Orange accent */}
 
           <div className="h-1.5 w-full bg-orange-500" />
 
@@ -207,11 +351,7 @@ export default function DashboardPage() {
 
             <div className="flex flex-col gap-10 lg:flex-row lg:items-center lg:justify-between">
 
-              {/* LEFT */}
-
               <div>
-
-                {/* Brand */}
 
                 <div className="flex items-center gap-3">
 
@@ -230,8 +370,6 @@ export default function DashboardPage() {
                   </div>
 
                 </div>
-
-                {/* Title */}
 
                 <div className="mt-9">
 
@@ -258,11 +396,7 @@ export default function DashboardPage() {
 
               </div>
 
-              {/* RIGHT */}
-
               <div className="flex flex-col gap-3 sm:flex-row lg:flex-col">
-
-                {/* Live */}
 
                 <div className="min-w-[230px] rounded-xl border border-zinc-200 bg-zinc-50 px-5 py-4">
 
@@ -285,6 +419,7 @@ export default function DashboardPage() {
                       <p className="mt-0.5 text-[8px] uppercase tracking-[0.2em] text-zinc-400">
                         Room is listening
                       </p>
+
                     </div>
 
                     <span className="ml-auto text-[8px] font-semibold uppercase tracking-wider text-green-600">
@@ -294,8 +429,6 @@ export default function DashboardPage() {
                   </div>
 
                 </div>
-
-                {/* Participant count */}
 
                 <div className="min-w-[230px] rounded-xl bg-orange-500 px-5 py-4 text-white">
 
@@ -325,9 +458,7 @@ export default function DashboardPage() {
 
         </header>
 
-        {/* ================================================= */}
         {/* STATISTICS */}
-        {/* ================================================= */}
 
         <section className="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
 
@@ -357,17 +488,13 @@ export default function DashboardPage() {
 
         </section>
 
-        {/* ================================================= */}
         {/* DOMINANT PERSONALITY */}
-        {/* ================================================= */}
 
         {statistics.topTag && (
 
           <section className="mt-7 overflow-hidden rounded-2xl border border-zinc-200 bg-white">
 
             <div className="flex flex-col lg:flex-row">
-
-              {/* Content */}
 
               <div className="flex-1 px-7 py-8 sm:px-9 sm:py-9">
 
@@ -403,8 +530,6 @@ export default function DashboardPage() {
 
               </div>
 
-              {/* Count */}
-
               <div className="flex min-w-[230px] items-center justify-center bg-orange-500 px-8 py-8 text-white">
 
                 <div className="text-center">
@@ -427,13 +552,9 @@ export default function DashboardPage() {
 
         )}
 
-        {/* ================================================= */}
         {/* PARTICIPANTS */}
-        {/* ================================================= */}
 
         <section className="mt-12">
-
-          {/* Section heading */}
 
           <div className="flex flex-col gap-5 border-b border-zinc-200 pb-6 sm:flex-row sm:items-end sm:justify-between">
 
@@ -495,15 +616,11 @@ export default function DashboardPage() {
 
           </div>
 
-          {/* Error */}
-
           {error && (
             <div className="mt-6 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-600">
               {error}
             </div>
           )}
-
-          {/* Loading */}
 
           {loading && participants.length === 0 ? (
 
@@ -532,9 +649,7 @@ export default function DashboardPage() {
 
         </section>
 
-        {/* ================================================= */}
         {/* FOOTER */}
-        {/* ================================================= */}
 
         <footer className="mt-14 border-t border-zinc-200 py-7">
 
@@ -577,7 +692,7 @@ function StatCard({
       <div className="flex items-center justify-between">
 
         <span
-          className={`h-2 w-2 rounded-full ${
+          className={`h-2 w-2 ${
             accent === "pink"
               ? "bg-pink-400"
               : "bg-orange-500"
@@ -614,19 +729,13 @@ function ParticipantCard({
   return (
     <article className="group overflow-hidden rounded-2xl border border-zinc-200 bg-white transition-all duration-300 hover:-translate-y-0.5 hover:border-orange-200 hover:shadow-[0_12px_35px_rgba(0,0,0,0.06)]">
 
-      {/* Orange accent */}
-
       <div className="h-1 bg-orange-500" />
 
       <div className="p-7 sm:p-8">
 
-        {/* Participant label */}
-
         <p className="text-[8px] font-medium uppercase tracking-[0.28em] text-zinc-300">
           Participant
         </p>
-
-        {/* Name + Emoji */}
 
         <div className="mt-5 flex items-center justify-between gap-5">
 
@@ -640,11 +749,7 @@ function ParticipantCard({
 
         </div>
 
-        {/* Divider */}
-
         <div className="my-7 h-px bg-zinc-100" />
-
-        {/* Tag */}
 
         <div>
 
@@ -657,8 +762,6 @@ function ParticipantCard({
           </h4>
 
         </div>
-
-        {/* Small footer */}
 
         <div className="mt-8 flex items-center justify-between border-t border-zinc-100 pt-4">
 

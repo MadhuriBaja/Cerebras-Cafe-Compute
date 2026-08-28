@@ -2,7 +2,7 @@ import { cerebras } from "@/lib/cerebras";
 
 export async function GET() {
   try {
-    const response = await cerebras.chat.completions.create({
+    await cerebras.chat.completions.create({
       model: "gpt-oss-120b",
       messages: [
         {
@@ -14,7 +14,7 @@ export async function GET() {
 
     return Response.json({
       success: true,
-      response: response.choices?.[0]?.message?.content,
+      response: "Cerebras connection successful",
     });
   } catch (error) {
     console.error("Cerebras test error:", error);
