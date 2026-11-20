@@ -1,16 +1,17 @@
+
 import React from "react";
 
 const TicketPreview = ({ ticketUrl, onReset }) => {
   const shareText = `🚀 Excited to attend Cerebras Cafe Compute!
 
-Looking forward to connecting, learning, collaborating and networking with the amazing @Cerebras community.
+Looking forward to connecting, learning, collaborating and networking with the amazing @Cerebras community and @OpenAI.
 
 #KramersCommunity
 #Hyderabad
 #Trending
 #Cerebras
 #CafeCompute
-#DevX`;
+#nanospace`;
 
   const handleDownload = async () => {
     try {
@@ -35,52 +36,48 @@ Looking forward to connecting, learning, collaborating and networking with the a
   };
 
   const handleLinkedInShare = async () => {
-    // Download attendee poster
     handleDownload();
 
-    // Copy caption
     await navigator.clipboard.writeText(shareText);
 
-    // Open LinkedIn
     setTimeout(() => {
       window.open("https://www.linkedin.com/feed/", "_blank");
 
       alert(
         `✅ Cerebras attendee poster downloaded!
 
-✅ Caption copied to clipboard!
+✅ Updated caption copied to clipboard!
 
 Next Steps:
 1. LinkedIn has been opened.
 2. Create a new post.
 3. Upload the downloaded Cerebras poster.
 4. Paste the copied caption (Ctrl + V).
-5. Add any @mentions if needed and post.`
+5. Select the official OpenAI and Cerebras profiles when adding mentions.
+6. Publish your post.`
       );
     }, 700);
   };
 
   const handleInstagramShare = async () => {
-    // Download attendee poster
     handleDownload();
 
-    // Copy caption
     await navigator.clipboard.writeText(shareText);
 
-    // Open Instagram
     setTimeout(() => {
       window.open("https://www.instagram.com/", "_blank");
 
       alert(
         `✅ Cerebras attendee poster downloaded!
 
-✅ Caption copied to clipboard!
+✅ Updated caption copied to clipboard!
 
 Next Steps:
 1. Instagram has been opened.
 2. Upload the downloaded Cerebras poster.
 3. Paste the copied caption.
-4. Share your post.`
+4. Select the official OpenAI and Cerebras accounts for mentions.
+5. Share your post.`
       );
     }, 700);
   };
@@ -113,7 +110,6 @@ Next Steps:
       />
 
       <div className="action-buttons">
-
         {/* Download */}
         <button
           onClick={handleDownload}
@@ -159,8 +155,7 @@ Next Steps:
           style={{
             flex: 1,
             minWidth: "150px",
-            background:
-              "linear-gradient(135deg,#f58529,#dd2a7b,#8134af,#515bd4)",
+            background: "#000000",
           }}
         >
           Share on X
@@ -202,7 +197,7 @@ Next Steps:
           </li>
 
           <li>
-            🚨 Tag Kramers Community, Cerebras and DevX.
+            🚨 Tag Kramers Community, Cerebras and OpenAI.
           </li>
 
           <li>
